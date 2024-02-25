@@ -9,7 +9,7 @@ const Filter = ({ onChange }) => (
       type="text"
       name="searchByName"
       style={{ padding: '5px' }}
-      onChange={debounce(onChange, 700)}
+      onChange={debounce(onChange, 400)}
     />
   </label>
 );

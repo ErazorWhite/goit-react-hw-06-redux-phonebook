@@ -33,8 +33,6 @@ const phoneNumberMask = [
   /\d/,
 ];
 
-// Благодаря Formik мы ушли от state и юзаем вот эти значения для инициализации
-// Вынес их в объект для удобства
 const initialValues = {
   name: '',
   number: '',
@@ -93,11 +91,7 @@ const ContactForm = ({ createPhoneBookEntry }) => {
                     placeholder="Enter phone number"
                     id="number"
                     type="text"
-                    // component="input"
-                    // ^ Тут пришлось убрать component="input". Если его добавить, то React начнёт слать варнинг.
-                    // К счастью, по умолчанию InputMask итак использует input.
-                    // Но если бы нужно было вставить другой тег, то это вызвало бы головную боль.
-                    // Вроде, это как-то решается через <StyleSheetManager shouldForwardProp={(prop) => prop !== 'component'}>
+                    component="input"
                   />
                 )}
               </StyledField>

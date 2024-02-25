@@ -4,6 +4,9 @@ export const StyledListItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
 `;
 
 export const StyledDeleteButton = styled.button`
@@ -22,6 +25,12 @@ export const StyledDeleteButton = styled.button`
 
 export const StyledContactEntryBox = styled.div`
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 5px;
 `;
+
+export const StyledContactEntry = styled.div`
+font-size: 1.1em;
+display: flex;
+gap: 5px;
+`
