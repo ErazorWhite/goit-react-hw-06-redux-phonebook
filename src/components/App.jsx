@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
@@ -6,30 +6,30 @@ import { nanoid } from 'nanoid';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocalStorage } from './hooks/useLocalStorage';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts, getFilter } from '../redux/selectors';
+import { setSearch } from '../redux/filterSlice';
+import { addContact, deleteContact } from '../redux/contactsSlice';
 
 const App = () => {
-  const [contacts, setContacts] = useLocalStorage('contacts', []);
-  const [filter, setFilter] = useState('');
+  // const [contacts, setContacts] = useLocalStorage('contacts', []);
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+  const dispatch = useDispatch();
 
   const createPhoneBookEntry = data => {
-    const normalizedData = data.name.toLowerCase();
-    if (contacts.some(({ name }) => name.toLowerCase() === normalizedData)) {
-      toast('Such a contact already exists!');
-      return;
-    }
+    console.log('🚀 ~ data:', data);
+    const normalizedData = data.userName.toLowerCase();
+    // if (contacts?.some(({ userName }) => userName.toLowerCase() === normalizedData)) {
+    //   toast('Such a contact already exists!');
+    //   return;
+    // }
 
-    const newPhoneBookEntry = {
-      ...data,
-      id: nanoid(),
-    };
-
-    setContacts(prevContacts => [...prevContacts, newPhoneBookEntry]);
+    dispatch(addContact(data));
   };
 
   const deletePhoneBookEntry = entryId => {
-    setContacts(prevContacts =>
-      prevContacts.filter(prevContact => prevContact.id !== entryId)
-    );
+    dispatch(deleteContact(entryId));
   };
 
   const handleSearchByName = ({ target: { value } }) => {
@@ -37,13 +37,16 @@ const App = () => {
   };
 
   const searchContactByName = contactName => {
-    setFilter(contactName);
+    dispatch(setSearch(contactName));
   };
 
   const normalizedFilter = filter.toLowerCase();
-  const filteredContacts = useMemo(() => (contacts.filter(contact =>
-    contact.name.toLowerCase().includes(normalizedFilter)
-  )), [contacts, normalizedFilter]);
+  const filteredContacts = useMemo(() => {
+    if (!contacts.length) return;
+    return contacts?.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  }, [normalizedFilter, contacts]);
 
   return (
     <div style={{ padding: '20px' }}>
@@ -51,7 +54,7 @@ const App = () => {
       <h1>Phonebook</h1>
       <ContactForm createPhoneBookEntry={createPhoneBookEntry} />
       <h2>Contacts</h2>
-      {contacts.length ? (
+      {contacts?.length ? (
         <>
           <Filter onChange={handleSearchByName} />
           <ContactList

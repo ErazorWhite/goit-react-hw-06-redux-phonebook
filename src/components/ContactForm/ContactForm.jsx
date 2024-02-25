@@ -34,13 +34,13 @@ const phoneNumberMask = [
 ];
 
 const initialValues = {
-  name: '',
+  userName: '',
   number: '',
 };
 
 // Схема для валидации yup
 const schema = yup.object().shape({
-  name: yup
+  userName: yup
     .string()
     .min(3, 'Too short!')
     .max(32, 'Too long!')
@@ -68,12 +68,12 @@ const ContactForm = ({ createPhoneBookEntry }) => {
     >
       <StyledForm>
         <FormConstolsContainer>
-          <StyledLabel htmlFor="name">
+          <StyledLabel htmlFor="userName">
             Name
             <FieldContainer>
               <StyledField
                 type="text"
-                name="name"
+                name="userName"
                 placeholder="Enter your name"
               />
               <ErrorMessage name="name" component={StyledErrorMessage} />
