@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import ContactListItem from '../ContactListItem/ContactListItem';
 import { StyledUnorderedList } from './ContactList.styled';
-import PropTypes from 'prop-types';
 import { getContacts } from '../../redux/contactsSlice';
 import { useMemo } from 'react';
 import { getFilter } from '../../redux/filterSlice';
