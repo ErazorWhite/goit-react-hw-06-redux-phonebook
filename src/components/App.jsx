@@ -5,9 +5,8 @@ import Filter from './Filter/Filter';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts, getFilter } from '../redux/selectors';
-import { setSearch } from '../redux/filterSlice';
-import { addContact, deleteContact } from '../redux/contactsSlice';
+import { getFilter, setSearch } from '../redux/filterSlice';
+import { addContact, deleteContact, getContacts } from '../redux/contactsSlice';
 
 const App = () => {
   const contacts = useSelector(getContacts);
@@ -17,7 +16,11 @@ const App = () => {
   const createPhoneBookEntry = data => {
     const normalizedData = data.userName?.toLowerCase();
 
-    if (contacts?.some(({ userName }) => userName.toLowerCase() === normalizedData)) {
+    if (
+      contacts?.some(
+        ({ userName }) => userName.toLowerCase() === normalizedData
+      )
+    ) {
       toast('Such a contact already exists!');
       return;
     }
@@ -38,7 +41,7 @@ const App = () => {
   };
 
   const normalizedFilter = filter?.toLowerCase();
-  
+
   const filteredContacts = useMemo(() => {
     if (!contacts.length) return;
     if (!normalizedFilter) return contacts;
