@@ -4,7 +4,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
 const initialState = {
-  contacts: [],
+  items: [],
 };
 
 const contactsSlice = createSlice({
@@ -13,7 +13,7 @@ const contactsSlice = createSlice({
   reducers: {
     addContact: {
       reducer(state, action) {
-        state.contacts.push(action.payload);
+        state.items.push(action.payload);
       },
       prepare({ userName, number }) {
         const id = nanoid();
@@ -22,18 +22,18 @@ const contactsSlice = createSlice({
         };
       },
     },
-    deleteContact: ({ contacts }, action) => {
-      const deleteIndex = contacts.findIndex(
+    deleteContact: ({ items }, action) => {
+      const deleteIndex = items.findIndex(
         contact => contact.id === action.payload
       );
-      if (deleteIndex > -1) contacts.splice(deleteIndex, 1);
+      if (deleteIndex > -1) items.splice(deleteIndex, 1);
     },
   },
 });
 
 export const { addContact, deleteContact } = contactsSlice.actions;
 
-export const getContacts = state => state.contacts.contacts;
+export const getContacts = state => state.contacts.items;
 
 const persistConfig = {
   key: 'contacts',
