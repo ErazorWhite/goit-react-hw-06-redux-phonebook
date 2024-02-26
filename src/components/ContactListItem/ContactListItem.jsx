@@ -8,13 +8,13 @@ import { FaPhoneAlt } from 'react-icons/fa';
 import { FaUser } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 
-const ContactListItem = ({ name, number, deletePhoneBookEntry, id }) => {
+const ContactListItem = ({ userName, number, deletePhoneBookEntry, id }) => {
   return (
     <StyledListItem>
       <StyledContactEntryBox>
         <StyledContactEntry>
           <FaUser />
-          <p>{name}</p>
+          <p>{userName}</p>
         </StyledContactEntry>
         <StyledContactEntry>
           <FaPhoneAlt />
@@ -29,7 +29,7 @@ const ContactListItem = ({ name, number, deletePhoneBookEntry, id }) => {
 };
 
 ContactListItem.propTypes = {
-  name: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
   deletePhoneBookEntry: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,

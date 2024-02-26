@@ -6,11 +6,11 @@ const ContactList = ({ contacts, deletePhoneBookEntry }) => {
   return (
     <>
       <StyledUnorderedList>
-        {contacts.map(({ id, name, number }) => (
+        {contacts.map(({ id, userName, number }) => (
           <ContactListItem
             key={id}
             id={id}
-            name={name}
+            userName={userName}
             number={number}
             deletePhoneBookEntry={deletePhoneBookEntry}
           />

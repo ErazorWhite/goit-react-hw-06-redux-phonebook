@@ -44,7 +44,7 @@ const schema = yup.object().shape({
     .string()
     .min(3, 'Too short!')
     .max(32, 'Too long!')
-    .notOneOf(['1234567890'], 'Invalid name') 
+    .notOneOf(['1234567890'], 'Invalid name')
     .matches(/^[a-zA-Z\s]+$/, 'Invalid name')
     .required('Required!'),
   number: yup
@@ -56,7 +56,7 @@ const schema = yup.object().shape({
 // Далее идёт компонент формы
 const ContactForm = ({ createPhoneBookEntry }) => {
   const handleSubmit = (values, { resetForm }) => {
-      createPhoneBookEntry({...values});
+    createPhoneBookEntry({ ...values });
     resetForm();
   };
 
@@ -76,7 +76,7 @@ const ContactForm = ({ createPhoneBookEntry }) => {
                 name="userName"
                 placeholder="Enter your name"
               />
-              <ErrorMessage name="name" component={StyledErrorMessage} />
+              <ErrorMessage name="userName" component={StyledErrorMessage} />
             </FieldContainer>
           </StyledLabel>
 
