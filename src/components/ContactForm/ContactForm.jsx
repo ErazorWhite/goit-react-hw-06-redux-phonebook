@@ -1,6 +1,5 @@
 import { Formik, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import PropTypes from 'prop-types';
 import {
   FormConstolsContainer,
   StyledForm,
@@ -11,6 +10,9 @@ import {
   StyledSubmitButton,
   StyledMaskedInput, // Франкенштейн из Masked + Styled, который под капотом ещё наверное Field от формика инкапсулирует
 } from './ContactForm.styled';
+import { addContact, getContacts } from '../../redux/contactsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 // Инпут маска для номера телефона
 const phoneNumberMask = [
@@ -54,7 +56,25 @@ const schema = yup.object().shape({
 });
 
 // Далее идёт компонент формы
-const ContactForm = ({ createPhoneBookEntry }) => {
+const ContactForm = () => {
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+
+  const createPhoneBookEntry = data => {
+    const normalizedData = data.userName?.toLowerCase();
+
+    if (
+      contacts?.some(
+        ({ userName }) => userName.toLowerCase() === normalizedData
+      )
+    ) {
+      toast('Such a contact already exists!');
+      return;
+    }
+
+    dispatch(addContact(data));
+  };
+
   const handleSubmit = (values, { resetForm }) => {
     createPhoneBookEntry({ ...values });
     resetForm();
@@ -105,10 +125,6 @@ const ContactForm = ({ createPhoneBookEntry }) => {
       </StyledForm>
     </Formik>
   );
-};
-
-ContactForm.propTypes = {
-  createPhoneBookEntry: PropTypes.func.isRequired,
 };
 
 export default ContactForm;

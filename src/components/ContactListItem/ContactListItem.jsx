@@ -7,8 +7,14 @@ import {
 import { FaPhoneAlt } from 'react-icons/fa';
 import { FaUser } from 'react-icons/fa';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { deleteContact } from '../../redux/contactsSlice';
 
-const ContactListItem = ({ userName, number, deletePhoneBookEntry, id }) => {
+const ContactListItem = ({ userName, number, id }) => {
+  const dispatch = useDispatch();
+  const deletePhoneBookEntry = entryId => {
+    dispatch(deleteContact(entryId));
+  };
   return (
     <StyledListItem>
       <StyledContactEntryBox>
@@ -31,7 +37,6 @@ const ContactListItem = ({ userName, number, deletePhoneBookEntry, id }) => {
 ContactListItem.propTypes = {
   userName: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
-  deletePhoneBookEntry: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
 };
 
